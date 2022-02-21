@@ -1,7 +1,7 @@
 # go-libp2p-kad-dht-patcher
 
-[![Continuous integration](https://github.com/hanabi1224/go-libp2p-kad-dht-patcher/actions/workflows/build-and-test.yml/badge.svg?branch=main)](https://github.com/hanabi1224/go-libp2p-kad-dht-patcher/actions/workflows/main.yml)
-[![codecov](https://codecov.io/gh/hanabi1224/go-libp2p-kad-dht-patcher/branch/main/graph/badge.svg?token=7YXISNRW48)](https://codecov.io/gh/hanabi1224/go-libp2p-kad-dht-patcher)
+[![ci](https://github.com/hanabi1224/go-libp2p-kad-dht-patcher/actions/workflows/main.yml/badge.svg)](https://github.com/hanabi1224/go-libp2p-kad-dht-patcher/actions/workflows/main.yml)
+[![codecov](https://codecov.io/gh/hanabi1224/go-libp2p-kad-dht-patcher/branch/main/graph/badge.svg?token=y3ay3rStEg)](https://codecov.io/gh/hanabi1224/go-libp2p-kad-dht-patcher)
 [![loc](https://tokei.rs/b1/github/hanabi1224/go-libp2p-kad-dht-patcher?category=code)](https://github.com/hanabi1224/go-libp2p-kad-dht-patcher)
 
 Utility to patch peer protection logic in go-libp2p-kad-dht
