@@ -11,22 +11,26 @@ import (
 )
 
 func TestPatcher1(t *testing.T) {
-	testPatcher(t, 0.5, 0)
+	testPatcher(t, 0.5, 0, false)
 }
 
 func TestPatcher2(t *testing.T) {
-	testPatcher(t, 0.3, 0)
+	testPatcher(t, 0.3, 0, true)
 }
 
 func TestPatcher3(t *testing.T) {
-	testPatcher(t, 0.8, 0)
+	testPatcher(t, 0.8, 0, false)
 }
 
 func TestPatcher4(t *testing.T) {
-	testPatcher(t, 0.5, 10)
+	testPatcher(t, 0.5, 10, false)
 }
 
-func testPatcher(t *testing.T, targetProtectionRate float32, maxProtected int) {
+func TestPatcher5(t *testing.T) {
+	testPatcher(t, 0.5, 10, true)
+}
+
+func testPatcher(t *testing.T, targetProtectionRate float32, maxProtected int, heartbeat bool) {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
@@ -66,6 +70,9 @@ func testPatcher(t *testing.T, targetProtectionRate float32, maxProtected int) {
 		peerHost, _ := makeHost(t, ctx)
 		// connect(host2, peerHost, ctx)
 		connect(host, peerHost, ctx)
+		if heartbeat {
+			patcher.Heartbeat(peerHost.ID())
+		}
 	}
 
 	hostDHT.RefreshRoutingTable()
