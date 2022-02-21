@@ -1,0 +1,28 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        go: ["1.17"]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-go@v2
+        with:
+          go-version: ${{ matrix.go }}
+          check-latest: true
+      - run: go version
+      - run: go mod vendor
+      - run: go test -v
+      # https://about.codecov.io/blog/getting-started-with-code-coverage-for-golang/
+      - name: code coverage
+        run: |
+          go test -coverprofile=coverage.out -covermode=atomic
+          bash <(curl -s https://codecov.io/bash)
