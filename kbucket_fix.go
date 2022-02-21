@@ -24,8 +24,10 @@ const (
 type DHTPeerProtectionPatcher struct {
 	// Max number of peers to protect
 	// non-positive means unlimited
+	// default is 0
 	MaxProtected int
 	// Target percentage of protected peers, (0.0,1.0]
+	// default is 0.5
 	ProtectionRate float32
 
 	lock sync.RWMutex
@@ -157,6 +159,7 @@ func (p *DHTPeerProtectionPatcher) adjustProtectedThreadUnsafe() {
 	}
 }
 
+// Creates a new patcher instance
 func NewPatcher() DHTPeerProtectionPatcher {
 	return DHTPeerProtectionPatcher{
 		MaxProtected:   0,
@@ -166,6 +169,8 @@ func NewPatcher() DHTPeerProtectionPatcher {
 	}
 }
 
+// Notify the patcher with a validated / known trusted peer id
+// so that it will be prefered in the protected peer selection algorithm
 func (p *DHTPeerProtectionPatcher) Heartbeat(peerId peer.ID) bool {
 	p.lock.Lock()
 	defer p.lock.Unlock()
@@ -189,7 +194,7 @@ func (p *DHTPeerProtectionPatcher) Heartbeat(peerId peer.ID) bool {
 	return updated
 }
 
-// Patch the peer protection algorithm of the given dht instance
+// Patches the peer protection algorithm of the given dht instance
 func (p *DHTPeerProtectionPatcher) Patch(dht *kaddht.IpfsDHT) {
 	p.dht = dht
 	p.host = dht.Host()
