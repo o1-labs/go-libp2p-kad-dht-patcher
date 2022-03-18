@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        go: ["1.17"]
+        go: ["1.18", "1.17"]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-go@v2
@@ -24,6 +24,7 @@ jobs:
       - run: go test -v
       # https://about.codecov.io/blog/getting-started-with-code-coverage-for-golang/
       - name: code coverage
+        if: matrix.go == '1.18'
         run: |
           go test -coverprofile=coverage.out -covermode=atomic
           bash <(curl -s https://codecov.io/bash)
