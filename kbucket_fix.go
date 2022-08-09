@@ -204,6 +204,9 @@ func (p *DHTPeerProtectionPatcher) Patch(dht *kaddht.IpfsDHT) {
 
 	p.routingTable.PeerAdded = func(pid peer.ID) {
 		p.connMgr.TagPeer(pid, kbucketTag, baseConnMgrScore)
+		// Common prefix len is an approximate inverse of the kad-dht distance
+		// Patcher aims to protect peers with minimal distance to us, hence we're protecting
+		// peers with maximum kad-dht distance
 		commonPrefixLen := kb.CommonPrefixLen(p.selfId, kb.ConvertPeerID(pid))
 		p.lock.Lock()
 		defer p.lock.Unlock()
