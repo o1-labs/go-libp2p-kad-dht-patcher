@@ -213,7 +213,7 @@ func (p *DHTPeerProtectionPatcher) Patch(dht *kaddht.IpfsDHT) {
 		// TODO: Logic here can be more efficient
 		// In reality, it's not likely to hold connections from a massive number of peers, say 100k+,
 		// a naive implementation can be more readable and less error-prone
-		insertThreadUnsafe(p.dist2tagged, commonPrefixLen, pid, time.UnixMicro(0))
+		insertThreadUnsafe(p.dist2tagged, commonPrefixLen, pid, time.Unix(0, 0))
 		p.adjustProtectedThreadUnsafe()
 	}
 

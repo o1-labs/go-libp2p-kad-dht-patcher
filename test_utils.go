@@ -3,6 +3,7 @@ package kbucketfix
 import (
 	"context"
 	"testing"
+	"time"
 
 	connmgr "github.com/libp2p/go-libp2p-connmgr"
 	"github.com/libp2p/go-libp2p-core/peer"
@@ -14,14 +15,14 @@ import (
 )
 
 func makeHost(t *testing.T, ctx context.Context) (*bhost.BasicHost, *kaddht.IpfsDHT) {
-	connMgr, _ := connmgr.NewConnManager(10, 100)
+	connMgr := connmgr.NewConnManager(10, 100, 10*time.Second)
 	dhtOpts := []kaddht.Option{
 		kaddht.DisableAutoRefresh(),
 		kaddht.Mode(kaddht.ModeServer),
 	}
 	hostOpt := new(bhost.HostOpts)
 	hostOpt.ConnManager = connMgr
-	host, err := bhost.NewHost(swarmt.GenSwarm(t, swarmt.OptDisableReuseport), hostOpt)
+	host, err := bhost.NewHost(ctx, swarmt.GenSwarm(t, ctx, swarmt.OptDisableReuseport), hostOpt)
 	require.NoError(t, err)
 	hostDHT, err := kaddht.New(ctx, host, dhtOpts...)
 	require.NoError(t, err)
