@@ -1,4 +1,4 @@
-module go-libp2p-kad-dht/kbucketfix/v2
+module github.com/o1-labs/go-libp2p-kad-dht-patcher
 
 go 1.16
 
