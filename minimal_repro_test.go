@@ -1,14 +1,14 @@
 package kbucketfix
 
 import (
-	"context"
 	"testing"
+	"time"
 
 	"github.com/libp2p/go-libp2p/core/peer"
 )
 
 func TestMinimalRepro(t *testing.T) {
-	ctx, cancel := context.WithCancel(context.Background())
+	ctx, cancel := prepareTest(t, time.Duration(30*time.Second))
 	defer cancel()
 
 	host, hostDHT := makeHost(t, ctx)
@@ -35,10 +35,14 @@ func TestMinimalRepro(t *testing.T) {
 		// log.Println("PeerRemoved: " + p.String())
 	}
 
+	host.Start()
+
 	host2, _ := makeHost(t, ctx)
+	host2.Start()
 	connect(host, host2, ctx)
 	for i := 0; i < 3000; i += 1 {
 		peerHost, _ := makeHost(t, ctx)
+		peerHost.Start()
 		// connect(host2, peerHost, ctx)
 		connect(host, peerHost, ctx)
 	}
